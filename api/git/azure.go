@@ -65,7 +65,7 @@ func NewAzureClient() *azureClient {
 func newHttpClientForAzure() *http.Client {
 	httpsCli := &http.Client{
 		Transport: &http.Transport{
-			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+			TLSClientConfig: &tls.Config{},
 			Proxy:           http.ProxyFromEnvironment,
 		},
 		Timeout: 300 * time.Second,
