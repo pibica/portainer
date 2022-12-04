@@ -1,4 +1,4 @@
-import { Check, X } from 'react-feather';
+import { Check, X } from 'lucide-react';
 import { CellProps, Column } from 'react-table';
 
 import { Icon } from '@@/Icon';

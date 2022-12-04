@@ -8,6 +8,8 @@ import { NamespaceAccessUsersSelector } from '@/react/kubernetes/namespaces/Acce
 import { CreateNamespaceRegistriesSelector } from '@/react/kubernetes/namespaces/CreateView/CreateNamespaceRegistriesSelector';
 import { withCurrentUser } from '@/react-tools/withCurrentUser';
 import { PlacementsDatatable } from '@/react/kubernetes/applications/ItemView/PlacementsDatatable';
+import { withUIRouter } from '@/react-tools/withUIRouter';
+import { ApplicationsStacksDatatable } from '@/react/kubernetes/applications/ListView/ApplicationsStacksDatatable';
 
 export const componentsModule = angular
   .module('portainer.kubernetes.react.components', [])
@@ -64,6 +66,14 @@ export const componentsModule = angular
       'onChange',
       'options',
       'value',
+    ])
+  )
+  .component(
+    'kubernetesApplicationsStacksDatatable',
+    r2a(withUIRouter(withCurrentUser(ApplicationsStacksDatatable)), [
+      'dataset',
+      'onRefresh',
+      'onRemove',
     ])
   )
   .component(
