@@ -1,6 +1,5 @@
-import { CellProps, Column } from 'react-table';
 import { useStore } from 'zustand';
-import { FileText, List, Trash2 } from 'lucide-react';
+import { List, Trash2 } from 'lucide-react';
 import clsx from 'clsx';
 
 import { Authorized, useAuthorizations } from '@/react/hooks/useUser';
@@ -21,21 +20,11 @@ import { TableSettingsMenu } from '@@/datatables';
 import { TableSettingsMenuAutoRefresh } from '@@/datatables/TableSettingsMenuAutoRefresh';
 import { Checkbox } from '@@/form-components/Checkbox';
 import { useRepeater } from '@@/datatables/useRepeater';
-import { buildExpandColumn } from '@@/datatables/expand-column';
 import { Link } from '@@/Link';
-import { Icon } from '@@/Icon';
 
-type Application = {
-  Name: string;
-  ResourcePool: string;
-};
+import { KubernetesStack } from '../types';
 
-type Stack = {
-  Name: string;
-  ResourcePool: string;
-  Applications: Array<Application>;
-  Highlighted: boolean;
-};
+import { columns } from './columns';
 
 const storageKey = 'kubernetes.applications.stacks';
 
@@ -54,66 +43,9 @@ const settingsStore = createPersistedStore<TableSettings>(
   })
 );
 
-const columns: Array<Column<Stack>> = [
-  buildExpandColumn<Stack>((item) => item.Applications.length > 0),
-  {
-    id: 'name',
-    Header: 'Stack',
-    accessor: 'Name',
-    disableFilters: true,
-    Filter: () => null,
-    canHide: false,
-  },
-  {
-    id: 'namespace',
-    Header: 'Namespace',
-    accessor: 'ResourcePool',
-    Cell: ({ value }: CellProps<Stack, string>) => (
-      <>
-        <Link to="kubernetes.resourcePools.resourcePool" params={{ id: value }}>
-          {value}
-        </Link>
-        {KubernetesNamespaceHelper.isSystemNamespace(value) && (
-          <span className="label label-info image-tag label-margins">
-            system
-          </span>
-        )}
-      </>
-    ),
-    disableFilters: true,
-    Filter: () => null,
-    canHide: false,
-  },
-  {
-    id: 'applications',
-    Header: 'Applications',
-    accessor: (row) => row.Applications.length,
-    disableFilters: true,
-    Filter: () => null,
-    canHide: false,
-  },
-  {
-    id: 'actions',
-    Header: 'Actions',
-    disableFilters: true,
-    Filter: () => null,
-    canHide: false,
-    Cell: ({ row: { original: item } }: CellProps<Stack>) => (
-      <Link
-        to="kubernetes.stacks.stack.logs"
-        params={{ namespace: item.ResourcePool, name: item.Name }}
-        className="vertical-center"
-      >
-        <Icon icon={FileText} />
-        Logs
-      </Link>
-    ),
-  },
-];
-
 interface Props {
-  dataset: Array<Stack>;
-  onRemove(selectedItems: Array<Stack>): void;
+  dataset: Array<KubernetesStack>;
+  onRemove(selectedItems: Array<KubernetesStack>): void;
   onRefresh(): Promise<void>;
 }
 
@@ -128,7 +60,7 @@ export function ApplicationsStacksDatatable({
   useRepeater(settings.autoRefreshRate, onRefresh);
 
   return (
-    <ExpandableDatatable<Stack>
+    <ExpandableDatatable<KubernetesStack>
       title="Stacks"
       titleIcon={List}
       dataset={dataset}
