@@ -38,6 +38,7 @@ import { PortainerSelect } from '@@/form-components/PortainerSelect';
 import { Slider } from '@@/form-components/Slider';
 import { TagButton } from '@@/TagButton';
 import { BETeaserButton } from '@@/BETeaserButton';
+import { CodeEditor } from '@@/CodeEditor';
 
 import { fileUploadField } from './file-upload-field';
 import { switchField } from './switch-field';
@@ -232,4 +233,16 @@ export const componentsModule = angular
     'porAccessManagementUsersSelector',
     r2a(PorAccessManagementUsersSelector, ['onChange', 'options', 'value'])
   )
-  .component('edgeKeyDisplay', r2a(EdgeKeyDisplay, ['edgeKey'])).name;
+  .component('edgeKeyDisplay', r2a(EdgeKeyDisplay, ['edgeKey']))
+  .component(
+    'reactCodeEditor',
+    r2a(CodeEditor, [
+      'id',
+      'placeholder',
+      'yaml',
+      'readonly',
+      'onChange',
+      'value',
+      'height',
+    ])
+  ).name;
