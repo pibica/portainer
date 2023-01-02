@@ -3,7 +3,7 @@ import angular from 'angular';
 import { gitForm } from './git-form';
 import { gitFormAuthFieldset } from './git-form-auth-fieldset';
 import { gitFormAdditionalFilesPanel } from './git-form-additional-files-panel';
-import { gitFormAdditionalFileItem } from './/git-form-additional-files-panel/git-form-additional-file-item';
+import { gitFormAdditionalFileItem } from './git-form-additional-files-panel/git-form-additional-file-item';
 import { gitFormAutoUpdateFieldset } from './git-form-auto-update-fieldset';
 import { gitFormComposePathField } from './git-form-compose-path-field';
 import { gitFormRefField } from './git-form-ref-field';
