@@ -61,7 +61,7 @@ export function confirmRedirect() {
     }
 
     const options = {
-      title: buildTitle('Failed opening tunnel'),
+      title: buildTitle('Failed opening tunnel', ModalTypeIcon.Destructive),
       message: messageFormatter(),
       buttons: {
         confirm: {
@@ -71,27 +71,26 @@ export function confirmRedirect() {
       },
     };
 
-    function dialogueCallback(confirmed: boolean) {
+    function dialogCallback(confirmed: boolean) {
       if (intervalID) {
         clearInterval(intervalID);
       }
       resolve(confirmed);
     }
 
-    const dialogue = confirm({
+    const dialog = confirm({
       ...options,
-      title: buildTitle(options.title),
-      callback: dialogueCallback,
+      callback: dialogCallback,
     });
 
     function countdownCallback() {
       count -= 1;
-      dialogue.find('.bootbox-body').html(messageFormatter());
+      dialog.find('.bootbox-body').html(messageFormatter());
 
       if (!count) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        dialogue.modal('hide');
+        dialog.modal('hide');
         clearInterval(intervalID);
         resolve(true);
       }
@@ -103,7 +102,7 @@ export function confirmRedirect() {
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    dialogue.init(countdown);
+    dialog.init(countdown);
   });
 }
 
