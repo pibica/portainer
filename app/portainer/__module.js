@@ -287,7 +287,7 @@ angular
 
       var home = {
         name: 'portainer.home',
-        url: '/home',
+        url: '/home?redirect&environmentId&route',
         views: {
           'content@': {
             component: 'homeView',
