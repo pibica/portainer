@@ -51,6 +51,62 @@ export function confirmAsync(options: ConfirmAsyncOptions) {
   });
 }
 
+export function confirmRedirect() {
+  return new Promise((resolve) => {
+    let count = 10;
+    let intervalID: NodeJS.Timer;
+
+    function messageFormatter() {
+      return `There was an issue connecting to edge agent via tunnel. Click 'Retry' below to retry now, or wait ${count} seconds to automatically retry.`;
+    }
+
+    const options = {
+      title: buildTitle('Failed opening tunnel'),
+      message: messageFormatter(),
+      buttons: {
+        confirm: {
+          label: 'Retry',
+          className: 'btn-primary',
+        },
+      },
+    };
+
+    function dialogueCallback(confirmed: boolean) {
+      if (intervalID) {
+        clearInterval(intervalID);
+      }
+      resolve(confirmed);
+    }
+
+    const dialogue = confirm({
+      ...options,
+      title: buildTitle(options.title),
+      callback: dialogueCallback,
+    });
+
+    function countdownCallback() {
+      count -= 1;
+      dialogue.find('.bootbox-body').html(messageFormatter());
+
+      if (!count) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        dialogue.modal('hide');
+        clearInterval(intervalID);
+        resolve(true);
+      }
+    }
+
+    function countdown() {
+      intervalID = setInterval(countdownCallback, 1000);
+    }
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    dialogue.init(countdown);
+  });
+}
+
 export function confirmDestructiveAsync(options: ConfirmAsyncOptions) {
   return new Promise((resolve) => {
     confirm({
@@ -70,6 +126,8 @@ export function confirm(options: ConfirmOptions) {
   });
 
   applyBoxCSS(box);
+
+  return box;
 }
 
 export function confirmWarn(options: ConfirmOptions) {
