@@ -1,11 +1,14 @@
-import { useRouter } from '@uirouter/react';
-import { useState } from 'react';
+import { useCurrentStateAndParams, useRouter } from '@uirouter/react';
+import { useEffect, useState } from 'react';
 
 import { Environment } from '@/react/portainer/environments/types';
 import { snapshotEndpoints } from '@/react/portainer/environments/environment.service';
 import { isEdgeEnvironment } from '@/react/portainer/environments/utils';
 import * as notifications from '@/portainer/services/notifications';
-import { confirmAsync } from '@/portainer/services/modal.service/confirm';
+import {
+  confirmAsync,
+  confirmRedirect,
+} from '@/portainer/services/modal.service/confirm';
 import { buildTitle } from '@/portainer/services/modal.service/utils';
 
 import { PageHeader } from '@@/PageHeader';
@@ -17,10 +20,29 @@ import { LicenseNodePanel } from './LicenseNodePanel';
 import { BackupFailedPanel } from './BackupFailedPanel';
 
 export function HomeView() {
+  const { params } = useCurrentStateAndParams();
   const [connectingToEdgeEndpoint, setConnectingToEdgeEndpoint] =
     useState(false);
 
   const router = useRouter();
+
+  useEffect(() => {
+    async function redirect() {
+      if (await confirmRedirect()) {
+        setConnectingToEdgeEndpoint(true);
+        router.stateService.go(params.route, {
+          endpointId: params.environmentId,
+        });
+      } else {
+        router.stateService.go('portainer.home', {}, { inherit: false });
+      }
+    }
+
+    if (params.redirect) {
+      redirect();
+    }
+  }, [params, setConnectingToEdgeEndpoint, router]);
+
   return (
     <>
       <PageHeader
