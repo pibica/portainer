@@ -51,7 +51,7 @@ export function confirmAsync(options: ConfirmAsyncOptions) {
   });
 }
 
-export function confirmRedirect() {
+export function confirmRedirect(environmentName: string) {
   return new Promise((resolve) => {
     let count = 10;
     let intervalID: NodeJS.Timer;
@@ -61,7 +61,10 @@ export function confirmRedirect() {
     }
 
     const options = {
-      title: buildTitle('Failed opening tunnel', ModalTypeIcon.Destructive),
+      title: buildTitle(
+        `Failed connecting to ${environmentName}`,
+        ModalTypeIcon.Destructive
+      ),
       message: messageFormatter(),
       buttons: {
         confirm: {

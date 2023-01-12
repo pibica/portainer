@@ -21,14 +21,15 @@ import { BackupFailedPanel } from './BackupFailedPanel';
 
 export function HomeView() {
   const { params } = useCurrentStateAndParams();
-  const [connectingToEdgeEndpoint, setConnectingToEdgeEndpoint] =
-    useState(false);
+  const [connectingToEdgeEndpoint, setConnectingToEdgeEndpoint] = useState(
+    !!params.redirect
+  );
 
   const router = useRouter();
 
   useEffect(() => {
     async function redirect() {
-      if (await confirmRedirect()) {
+      if (await confirmRedirect(params.environmentName)) {
         setConnectingToEdgeEndpoint(true);
         router.stateService.go(params.route, {
           endpointId: params.environmentId,
