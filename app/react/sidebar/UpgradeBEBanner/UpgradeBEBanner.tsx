@@ -22,6 +22,7 @@ export const UpgradeBEBannerWrapper = withHideOnExtension(
 const enabledPlatforms: Array<ContainerPlatform> = [
   'Docker Standalone',
   'Docker Swarm',
+  'Kubernetes',
 ];
 
 function UpgradeBEBanner() {
