@@ -42,7 +42,7 @@ type RenderItemFunction<T> = (
 ) => React.ReactNode;
 
 interface Props<T> {
-  label: string;
+  label?: string;
   value: T[];
   onChange(value: T[], e: OnChangeEvent<T>): void;
   itemBuilder?(): T;
@@ -76,22 +76,25 @@ export function InputList<T = DefaultType>({
   disabled,
   readOnly,
 }: Props<T>) {
+  const isAddButtonVisible = !(isAddButtonHidden || readOnly);
   return (
     <div className={clsx('form-group', styles.root)}>
-      <div className={clsx('col-sm-12', styles.header)}>
-        <div className={clsx('control-label text-left', styles.label)}>
-          {label}
-          {tooltip && <Tooltip message={tooltip} />}
+      {!!(label || tooltip || isAddButtonVisible) && (
+        <div className={clsx('col-sm-12', styles.header)}>
+          <div className={clsx('control-label text-left', styles.label)}>
+            {label}
+            {tooltip && <Tooltip message={tooltip} />}
+          </div>
+          {isAddButtonVisible && (
+            <AddButton
+              label={addLabel}
+              className="space-left"
+              onClick={handleAdd}
+              disabled={disabled}
+            />
+          )}
         </div>
-        {!(isAddButtonHidden || readOnly) && (
-          <AddButton
-            label={addLabel}
-            className="space-left"
-            onClick={handleAdd}
-            disabled={disabled}
-          />
-        )}
-      </div>
+      )}
 
       {textTip && (
         <div className="col-sm-12 mt-5">
