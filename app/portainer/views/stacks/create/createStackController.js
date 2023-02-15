@@ -2,7 +2,7 @@ import angular from 'angular';
 import uuidv4 from 'uuid/v4';
 
 import { AccessControlFormData } from '@/portainer/components/accessControlForm/porAccessControlFormModel';
-import { STACK_NAME_VALIDATION_REGEX } from '@/constants';
+import { STACK_NAME_VALIDATION_REGEX } from '@/constants_es6';
 import { RepositoryMechanismTypes } from '@/kubernetes/models/deploy';
 import { FeatureId } from '@/react/portainer/feature-flags/enums';
 import { isBE } from '@/react/portainer/feature-flags/feature-flags.service';

@@ -29,7 +29,6 @@ export const PREDEFINED_NETWORKS = ['host', 'bridge', 'ingress', 'nat', 'none'];
 export const KUBERNETES_DEFAULT_NAMESPACE = 'default';
 export const KUBERNETES_SYSTEM_NAMESPACES = ['kube-system', 'kube-public', 'kube-node-lease', 'portainer'];
 export const PORTAINER_FADEOUT = 1500;
-export const STACK_NAME_VALIDATION_REGEX = '^[-_a-z0-9]+$';
 export const TEMPLATE_NAME_VALIDATION_REGEX = '^[-_a-z0-9]+$';
 
 // don't declare new constants, either:
