@@ -156,6 +156,7 @@ function EdgeKeyInfo({
         commands={commands}
         isNomadTokenVisible
         asyncMode={asyncMode}
+        showMetaFields
       >
         <FormControl label="Portainer API server URL">
           <Input value={url} readOnly />
