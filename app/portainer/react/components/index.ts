@@ -39,6 +39,7 @@ import { Slider } from '@@/form-components/Slider';
 import { TagButton } from '@@/TagButton';
 import { BETeaserButton } from '@@/BETeaserButton';
 import { TimeWindowDisplay } from '@@/TimeWindowDisplay';
+import { InsightsBox } from '@@/InsightsBox';
 
 import { fileUploadField } from './file-upload-field';
 import { switchField } from './switch-field';
@@ -91,6 +92,10 @@ export const componentsModule = angular
   .component('badge', r2a(Badge, ['type', 'className']))
   .component('fileUploadField', fileUploadField)
   .component('porSwitchField', switchField)
+  .component(
+    'insightsBox',
+    r2a(InsightsBox, ['header', 'content', 'setHtmlContent'])
+  )
   .component(
     'passwordCheckHint',
     r2a(withReactQuery(PasswordCheckHint), [
