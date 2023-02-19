@@ -32,10 +32,10 @@ export class EditEdgeGroupController {
     return this.$async(this.updateGroupAsync);
   }
 
-  async updateGroupAsync() {
+  async updateGroupAsync(group) {
     this.state.actionInProgress = true;
     try {
-      await this.EdgeGroupService.update(this.model);
+      await this.EdgeGroupService.update(group);
       this.Notifications.success('Success', 'Edge group successfully updated');
       this.$state.go('edge.groups');
     } catch (err) {
