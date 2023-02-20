@@ -8,22 +8,9 @@ export type EnvironmentSelectorValue = typeof environmentTypes[number]['id'];
 interface Props {
   value: EnvironmentSelectorValue[];
   onChange(value: EnvironmentSelectorValue[]): void;
-  createEdgeDevice?: boolean;
 }
 
-const hasEdge: EnvironmentSelectorValue[] = [
-  'dockerStandalone',
-  'dockerSwarm',
-  'kubernetes',
-];
-
-export function EnvironmentSelector({
-  value,
-  onChange,
-  createEdgeDevice,
-}: Props) {
-  const options = filterEdgeDevicesIfNeed(environmentTypes, createEdgeDevice);
-
+export function EnvironmentSelector({ value, onChange }: Props) {
   return (
     <div className="form-horizontal">
       <FormSection title="Select your environment(s)">
@@ -33,7 +20,7 @@ export function EnvironmentSelector({
         </p>
 
         <BoxSelector
-          options={options}
+          options={environmentTypes}
           isMulti
           value={value}
           onChange={onChange}
@@ -42,15 +29,4 @@ export function EnvironmentSelector({
       </FormSection>
     </div>
   );
-}
-
-function filterEdgeDevicesIfNeed(
-  types: typeof environmentTypes,
-  createEdgeDevice?: boolean
-) {
-  if (!createEdgeDevice) {
-    return [...types];
-  }
-
-  return [...types.filter((eType) => hasEdge.includes(eType.id))];
 }

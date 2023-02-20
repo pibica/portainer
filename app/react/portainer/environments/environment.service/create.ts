@@ -112,7 +112,6 @@ export interface EnvironmentOptions {
   meta?: EnvironmentMetadata;
   azure?: AzureSettings;
   tls?: TLSSettings;
-  isEdgeDevice?: boolean;
   gpus?: Gpu[];
   pollFrequency?: number;
   edge?: EdgeSettings;
@@ -174,7 +173,6 @@ interface CreateEdgeAgentEnvironment {
   meta?: EnvironmentMetadata;
   pollFrequency: number;
   gpus?: Gpu[];
-  isEdgeDevice?: boolean;
   edge: EdgeSettings;
 }
 
@@ -183,7 +181,6 @@ export function createEdgeAgentEnvironment({
   portainerUrl,
   meta = { tagIds: [] },
   gpus = [],
-  isEdgeDevice,
   pollFrequency,
   edge,
 }: CreateEdgeAgentEnvironment) {
@@ -197,7 +194,6 @@ export function createEdgeAgentEnvironment({
         skipClientVerify: true,
       },
       gpus,
-      isEdgeDevice,
       pollFrequency,
       edge,
       meta,
@@ -225,7 +221,6 @@ async function createEnvironment(
       GroupID: groupId,
       TagIds: arrayToJson(tagIds),
       CheckinInterval: options.pollFrequency,
-      IsEdgeDevice: options.isEdgeDevice,
       Gpus: arrayToJson(options.gpus),
     };
 
