@@ -94,7 +94,7 @@ export const componentsModule = angular
   .component('porSwitchField', switchField)
   .component(
     'insightsBox',
-    r2a(InsightsBox, ['header', 'content', 'setHtmlContent'])
+    r2a(InsightsBox, ['header', 'content', 'setHtmlContent', 'insightCloseId'])
   )
   .component(
     'passwordCheckHint',
