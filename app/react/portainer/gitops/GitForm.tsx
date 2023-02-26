@@ -27,6 +27,8 @@ interface Props {
   isAuthExplanationVisible?: boolean;
   errors: FormikErrors<GitFormModel>;
   baseWebhookUrl: string;
+  webhookId: string;
+  webhooksDocs?: string;
 }
 
 export function GitForm({
@@ -39,6 +41,8 @@ export function GitForm({
   isAuthExplanationVisible,
   errors = {},
   baseWebhookUrl,
+  webhookId,
+  webhooksDocs,
 }: Props) {
   return (
     <FormSection title="Git repository">
@@ -88,11 +92,13 @@ export function GitForm({
 
       {value.AutoUpdate && (
         <AutoUpdateFieldset
+          webhookId={webhookId}
           baseWebhookUrl={baseWebhookUrl}
           value={value.AutoUpdate}
           onChange={(value) => handleChange({ AutoUpdate: value })}
           isForcePullVisible={isForcePullVisible}
           errors={errors.AutoUpdate as FormikErrors<GitFormModel['AutoUpdate']>}
+          webhooksDocs={webhooksDocs}
         />
       )}
 

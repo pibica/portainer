@@ -24,6 +24,8 @@ export const gitFormModule = angular
       'isAuthExplanationVisible',
       'errors',
       'baseWebhookUrl',
+      'webhookId',
+      'webhooksDocs',
     ])
   )
   .component(
@@ -45,6 +47,8 @@ export const gitFormModule = angular
       'isForcePullVisible',
       'errors',
       'baseWebhookUrl',
+      'webhookId',
+      'webhooksDocs',
     ])
   )
   .component(
